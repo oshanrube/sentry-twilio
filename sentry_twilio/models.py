@@ -20,7 +20,7 @@ import sentry_twilio
 DEFAULT_REGION = 'US'
 MAX_SMS_LENGTH = 160
 
-twilio_sms_endpoint = 'https://api.twilio.com/2010-04-01/Accounts/{0}/SMS/Messages.json'
+twilio_sms_endpoint = 'https://api.twilio.com/2010-04-01/Accounts/{0}/Messages.json'
 
 
 def validate_phone(phone):
@@ -115,8 +115,8 @@ class TwilioPlugin(NotificationPlugin):
 
         body = 'Sentry [{0}] {1}: {2}'.format(
             project.name.encode('utf-8'),
-            event.get_level_display().upper().encode('utf-8'),
-            event.error().encode('utf-8').splitlines()[0]
+            event.event_id.encode('utf-8'),
+            event.message.encode('utf-8').splitlines()[0]
         )
         body = body[:MAX_SMS_LENGTH]
 
